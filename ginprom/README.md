@@ -15,7 +15,7 @@ It's easy to get started with ginprom, only a few lines of code needed.
 
 ```golang
 import (
-	"gitlab.com/golang/ginprom"
+	"github.com/woaijssss/common-golib/ginprom"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
