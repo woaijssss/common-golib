@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/woaijssss/ginprom"
+	"github.com/woaijssss/common-golib/ginprom"
 )
 
 func init() {
