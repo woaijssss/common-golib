@@ -21,14 +21,14 @@ type Gin struct {
 }
 
 type Response struct {
-	Code      int32       `json:"code"`
+	Code      int       `json:"code"`
 	Msg       string      `json:"msg"`
 	RequestId string      `json:"request_id"`
 	Time      time.Time   `json:"time"`
 	Data      interface{} `json:"data"`
 }
 
-func (g *Gin) Response(httpCode, errCode int32 , data interface{}) {
+func (g *Gin) Response(httpCode, errCode int , data interface{}) {
 	context.SetErrorCode(g.C, errCode)
 	response := Response{
 		Code:      errCode,
@@ -45,7 +45,7 @@ func (g *Gin) Response(httpCode, errCode int32 , data interface{}) {
 	return
 }
 
-func (g *Gin) ResponseWithMessage(httpCode, errCode int32 , data interface{}, msg string) {
+func (g *Gin) ResponseWithMessage(httpCode, errCode int , data interface{}, msg string) {
 	context.SetErrorCode(g.C, errCode)
 	response := Response{
 		Code:      errCode,
@@ -67,15 +67,15 @@ func (g *Gin) ResponseSuccess(data interface{}) {
 	g.Response(http.StatusOK, common.SUCCESS, data)
 }
 
-func (g *Gin) ResponseError(errCode int32, data interface{}) {
+func (g *Gin) ResponseError(errCode int, data interface{}) {
 	g.Response(http.StatusOK, errCode,  data)
 }
 
-func (g *Gin) ResponseErrorWithMsg(errCode int32, msg string) {
+func (g *Gin) ResponseErrorWithMsg(errCode int, msg string) {
 	g.ResponseWithMessage(http.StatusOK, errCode,  nil, msg)
 }
 
-func (g *Gin) ResponseErrorWithMsgAndData(errCode int32, data interface{}, msg string) {
+func (g *Gin) ResponseErrorWithMsgAndData(errCode int, data interface{}, msg string) {
 	g.ResponseWithMessage(http.StatusOK, errCode,  data, msg)
 }
 

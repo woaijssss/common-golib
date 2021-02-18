@@ -160,7 +160,7 @@ func GetUserRoleCode(ctx *gin.Context) string {
 	return v.(string)
 }
 
-func SetErrorCode(ctx *gin.Context, errorCode int32) {
+func SetErrorCode(ctx *gin.Context, errorCode int) {
 	SetContextData(ctx, ErrorCode, errorCode)
 }
 
