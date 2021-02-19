@@ -11,10 +11,9 @@ import (
 	"time"
 )
 
-
 var (
 	env string
-	db map[string] *gorm.DB
+	db  map[string]*gorm.DB
 )
 
 func SetEnv(pEnv string) {
@@ -28,29 +27,16 @@ func GetDB(dbName string) *gorm.DB {
 	return db[dbName]
 }
 
-func GetFWDB() *gorm.DB {
-	return GetDB("db_property")
+func GetYTBDB() *gorm.DB {
+	return GetDB("ytb_service")
 }
-
-func GetParkingDB() *gorm.DB {
-	return GetDB("db_parking")
-}
-
-func GetOrderDB() *gorm.DB {
-	return GetDB("db_order")
-}
-
-func GetCashierDB() *gorm.DB {
-	return GetDB("db_cashier")
-}
-
 
 func MysqlSetup(dbName string) {
 	mysqlConfig := conf.GetMysqlConf(env)
 	var dsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FShanghai&timeout=10s",
-		mysqlConfig.MysqlUser,
-		mysqlConfig.MysqlPassword,
-		mysqlConfig.MysqlHost,
+		mysqlConfig.User,
+		mysqlConfig.Password,
+		mysqlConfig.Host,
 		dbName)
 	newDB, err := gorm.Open("mysql", dsn)
 
@@ -58,9 +44,9 @@ func MysqlSetup(dbName string) {
 		logger.Fatalf(context.GetGinContextWithRequestId(), "models.Setup err: %v", err.Error())
 	}
 
-	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-		return conf.GetDBPrefix(db.Dialect().CurrentDatabase()) + defaultTableName
-	}
+	//gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+	//	return conf.GetDBPrefix(db.Dialect().CurrentDatabase()) + defaultTableName
+	//}
 
 	myLogger := &MyLogger{}
 
@@ -73,7 +59,7 @@ func MysqlSetup(dbName string) {
 	newDB.Set("gorm:association_save_reference", false) //禁止自动创建关联关系
 
 	if db == nil {
-		db = make(map[string] *gorm.DB)
+		db = make(map[string]*gorm.DB)
 	}
 
 	db[dbName] = newDB
@@ -100,8 +86,8 @@ type MyLogger struct{}
 
 func (l *MyLogger) Print(values ...interface{}) {
 	var (
-		level           = values[0]
-		source          = values[1]
+		level  = values[0]
+		source = values[1]
 	)
 
 	ctx := context.GetGinContextWithRequestId()
