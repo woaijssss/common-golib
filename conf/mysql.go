@@ -1,8 +1,8 @@
 package conf
 
-const MysqlConfigDevHost = "127.0.0.1:3306"
-const MysqlConfigDevUser = "admin"
-const MysqlConfigDevPassword = "123456"
+//const MysqlConfigDevHost = "127.0.0.1:3306"
+//const MysqlConfigDevUser = "admin"
+//const MysqlConfigDevPassword = "123456"
 
 //const FWDBPrefix = "fw_"
 //const FWDBParkingPrefix = "fw_"
@@ -21,8 +21,8 @@ type MysqlConfig struct {
 
 var MysqlConf = &MysqlConfig{}
 
-func GetMysqlConf(env string) (conf MysqlConfig) {
-	conf.Type = "mysql"
+func GetMysqlConf(env string) MysqlConfig {
+	//conf.Type = "mysql"
 	//if env == "prod" {
 	//	conf.MysqlHost = MysqlConfigProdHost
 	//	conf.MysqlUser = MysqlConfigProdUser
@@ -30,11 +30,11 @@ func GetMysqlConf(env string) (conf MysqlConfig) {
 	//	return
 	//}
 
-	conf.Host = MysqlConfigDevHost
-	conf.User = MysqlConfigDevUser
-	conf.Password = MysqlConfigDevPassword
+	//conf.Host = MysqlConfigDevHost
+	//conf.User = MysqlConfigDevUser
+	//conf.Password = MysqlConfigDevPassword
 
-	return
+	return *MysqlConf
 }
 
 //var DBPrefixName map[string]string
