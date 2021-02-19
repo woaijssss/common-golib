@@ -4,7 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/go-redis/redis"
-	"gitlab.com/golang/commons/setting"
+	"github.com/woaijssss/common-golib/commons/setting"
 	"os"
 	"path"
 	"runtime"

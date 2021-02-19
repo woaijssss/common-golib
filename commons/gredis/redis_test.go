@@ -1,7 +1,7 @@
 package gredis
 
 import (
-	"gitlab.com/golang/commons/setting"
+	"github.com/woaijssss/common-golib/commons/setting"
 	"os"
 	"testing"
 )
