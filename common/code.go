@@ -104,19 +104,3 @@ func GetMsg(code int) string {
 
 	return MsgFlags[ERROR]
 }
-
-// 错误码
-type ErrorCode struct {
-	Code int `json`
-	Msg  string
-}
-
-// 定义结构体成员函数
-func (e *ErrorCode) SetErrorCode(code int) {
-	e.Code = code
-	e.Msg = GetMsg(code)
-}
-
-func NewErrorCode() ErrorCode {
-	return ErrorCode{Code: SUCCESS, Msg: MsgFlags[SUCCESS]}
-}
