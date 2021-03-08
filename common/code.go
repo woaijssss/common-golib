@@ -42,11 +42,11 @@ const (
 	ErrorUploadCheckImageFail     = 50002 //格式错误
 	ErrorRTSPUrlInvalid           = 10003 //视频流地址错误
 	LicenseNotExist               = 10004 //车牌号不存在
-	ReachMaxPlayCount      		  = 10005 //到达播放上限
+	ReachMaxPlayCount             = 10005 //到达播放上限
 	LicenseExist                  = 10006 //车牌号不存在
 )
 
-var MsgFlags = map[int32]string{
+var MsgFlags = map[int]string{
 	SUCCESS:                       "成功",
 	ERROR:                         "失败",
 	InvalidParams:                 "参数不合法",
@@ -96,11 +96,27 @@ var NoNeedInsert = errors.New("NO NEED INSERT")
 var NoData = errors.New("NO DATA")
 
 // GetMsg get error information based on Code
-func GetMsg(code int32) string {
+func GetMsg(code int) string {
 	msg, ok := MsgFlags[code]
 	if ok {
 		return msg
 	}
 
 	return MsgFlags[ERROR]
+}
+
+// 错误码
+type ErrorCode struct {
+	Code int `json`
+	Msg  string
+}
+
+// 定义结构体成员函数
+func (e *ErrorCode) SetErrorCode(code int) {
+	e.Code = code
+	e.Msg = GetMsg(code)
+}
+
+func NewErrorCode() ErrorCode {
+	return ErrorCode{Code: SUCCESS, Msg: MsgFlags[SUCCESS]}
 }
