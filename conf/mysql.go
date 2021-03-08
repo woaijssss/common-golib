@@ -17,6 +17,7 @@ type MysqlConfig struct {
 	Name        string `yaml:"Name"`
 	PmsName     string `yaml:"PmsName"`
 	TablePrefix string `yaml:"TablePrefix"`
+	DBName      string `yaml:"DBName"`
 }
 
 var MysqlConf = &MysqlConfig{}

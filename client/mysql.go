@@ -13,32 +13,33 @@ import (
 
 var (
 	env string
-	db  map[string]*gorm.DB
+	db  *gorm.DB
 )
 
 func SetEnv(pEnv string) {
 	env = pEnv
 }
 
-func GetDB(dbName string) *gorm.DB {
-	if _, ok := db[dbName]; !ok {
-		MysqlSetup(dbName)
+func GetDB() *gorm.DB {
+	if db == nil {
+		MysqlSetup()
 	}
-	return db[dbName]
+	return db
 }
 
-func GetYTBDB() *gorm.DB {
-	return GetDB("ytb_service")
-}
+//func GetYTBDB() *gorm.DB {
+//	return GetDB("ytb_service")
+//}
 
-func MysqlSetup(dbName string) {
+func MysqlSetup() {
 	mysqlConfig := conf.GetMysqlConf(env)
 	var dsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FShanghai&timeout=10s",
 		mysqlConfig.User,
 		mysqlConfig.Password,
 		mysqlConfig.Host,
-		dbName)
-	newDB, err := gorm.Open("mysql", dsn)
+		mysqlConfig.DBName)
+	var err error
+	db, err = gorm.Open("mysql", dsn)
 
 	if err != nil {
 		logger.Fatalf(context.GetGinContextWithRequestId(), "models.Setup err: %v", err.Error())
@@ -50,34 +51,34 @@ func MysqlSetup(dbName string) {
 
 	myLogger := &MyLogger{}
 
-	newDB.LogMode(true)
-	newDB.SetLogger(myLogger)
-	newDB.SingularTable(true)
-	newDB.DB().SetMaxIdleConns(10)
-	newDB.DB().SetMaxOpenConns(100)
-	newDB.Set("gorm:association", false)                //禁止自动创建/更新包含关系
-	newDB.Set("gorm:association_save_reference", false) //禁止自动创建关联关系
+	db.LogMode(true)
+	db.SetLogger(myLogger)
+	db.SingularTable(true)
+	db.DB().SetMaxIdleConns(10)
+	db.DB().SetMaxOpenConns(100)
+	db.Set("gorm:association", false)                //禁止自动创建/更新包含关系
+	db.Set("gorm:association_save_reference", false) //禁止自动创建关联关系
 
-	if db == nil {
-		db = make(map[string]*gorm.DB)
-	}
-
-	db[dbName] = newDB
+	//if db == nil {
+	//	db = make(map[string]*gorm.DB)
+	//}
+	//
+	//db[dbName] = newDB
 }
 
 // CloseDB closes database connection (unnecessary)
-func CloseAllDB() {
-	defer func() {
-		for dbName, _ := range db {
-			db[dbName].Close()
-		}
-	}()
-}
+//func CloseAllDB() {
+//	defer func() {
+//		for dbName, _ := range db {
+//			db[dbName].Close()
+//		}
+//	}()
+//}
 
 func CloseDB(dbName string) {
 	defer func() {
-		if _, ok := db[dbName]; ok {
-			db[dbName].Close()
+		if db != nil {
+			db.Close()
 		}
 	}()
 }
