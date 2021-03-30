@@ -4,12 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus"
-	. "github.com/woaijssss/common-golib/app/context"
-	"github.com/woaijssss/common-golib/app/logger"
-	"github.com/woaijssss/common-golib/client"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -67,32 +62,5 @@ func Cors() gin.HandlerFunc {
 			c.JSON(http.StatusOK, "Options Request!")
 		}
 		c.Next() //  处理请求
-	}
-}
-
-//Metric metric middleware
-func Metric() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		logger.Info(c, "Metric start")
-		tBegin := time.Now()
-		c.Next()
-		logger.Info(c, "Metric end")
-		duration := float64(time.Since(tBegin)) / float64(time.Second)
-		communityId := GetCommunityID(c)
-		path := c.Request.URL.Path
-		errorCode := GetErrorCode(c)
-		logger.Infof(c, "communityId=[%s] uri=[%s] duration=[%f] code=[%d]", communityId, path, duration, errorCode)
-		// 请求数加1
-		client.HttpRequestQps.With(prometheus.Labels{
-			client.CommunityLabel: communityId,
-			client.UrlLabel:       path,
-			client.ErrorCodeLabel: strconv.Itoa(int(errorCode)),
-		}).Inc()
-
-		// 记录本次请求处理时间
-		client.HttpRequestLatency.With(prometheus.Labels{
-			client.CommunityLabel: communityId,
-			client.UrlLabel:       path,
-		}).Set(duration)
 	}
 }

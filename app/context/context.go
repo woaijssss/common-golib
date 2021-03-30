@@ -10,18 +10,11 @@ import (
 )
 
 const (
-	CommunityId = "community_id"
-	UserId      = "user_id"
-	Token       = "token"
-	Role        = "role_code"
-	Name        = "name"
-	Nickname    = "nickname"
-	Avatar      = "avatar"
-	Email       = "email"
-	Phone       = "phone"
-	ErrorCode   = "error_code"
-	AlarmType   = "alarm_type"
-	RequestId   = "request_id"
+	Token     = "token"
+	Name      = "name"
+	Email     = "email"
+	ErrorCode = "error_code"
+	RequestId = "request_id"
 )
 
 func GetGinContextWithRequestId() *gin.Context {
@@ -52,6 +45,7 @@ func GetContextData(ctx *gin.Context, key string) interface{} {
 	}
 	return value
 }
+
 func SetUserName(ctx *gin.Context, name string) {
 	SetContextData(ctx, Name, name)
 }
@@ -64,56 +58,6 @@ func GetUserName(ctx *gin.Context) string {
 	return v.(string)
 }
 
-func SetUserPhone(ctx *gin.Context, phone string) {
-	SetContextData(ctx, Phone, phone)
-}
-
-func GetUserPhone(ctx *gin.Context) string {
-	v := GetContextData(ctx, Phone)
-	if v == nil {
-		return ""
-	}
-	return v.(string)
-}
-
-func SetUserNickName(ctx *gin.Context, nickname string) {
-	SetContextData(ctx, Nickname, nickname)
-}
-
-func GetUserNickName(ctx *gin.Context) string {
-	v := GetContextData(ctx, Nickname)
-	return v.(string)
-}
-func SetEmail(ctx *gin.Context, email string) {
-	SetContextData(ctx, Email, email)
-}
-
-func GetEmail(ctx *gin.Context) string {
-	v := GetContextData(ctx, Email)
-	return v.(string)
-}
-func SetAvatar(ctx *gin.Context, avatar string) {
-	SetContextData(ctx, Avatar, avatar)
-}
-
-func GetAvatar(ctx *gin.Context) string {
-	v := GetContextData(ctx, Avatar)
-	return v.(string)
-}
-
-func SetUserID(ctx *gin.Context, userID string) {
-	SetContextData(ctx, UserId, userID)
-}
-
-func GetUserID(ctx *gin.Context) string {
-	v := GetContextData(ctx, UserId)
-	if v != nil {
-		return v.(string)
-	} else {
-		return ""
-	}
-}
-
 func SetToken(ctx *gin.Context, token string) {
 	SetContextData(ctx, Token, token)
 }
@@ -121,43 +65,6 @@ func SetToken(ctx *gin.Context, token string) {
 func GetToken(ctx *gin.Context) string {
 	token := GetContextData(ctx, Token)
 	return token.(string)
-}
-func SetCommunityID(ctx *gin.Context, companyID string) {
-	SetContextData(ctx, CommunityId, companyID)
-}
-
-func GetCommunityID(ctx *gin.Context) string {
-	v := GetContextData(ctx, CommunityId)
-	if v != nil {
-		return v.(string)
-	} else {
-		return ""
-	}
-}
-
-func SetAlarmType(ctx *gin.Context, alarmType string) {
-	SetContextData(ctx, AlarmType, alarmType)
-}
-
-func GetAlarmType(ctx *gin.Context) string {
-	v := GetContextData(ctx, AlarmType)
-	if v != nil {
-		return v.(string)
-	} else {
-		return ""
-	}
-}
-
-func SetUserRoleCode(ctx *gin.Context, roleCode string) {
-	SetContextData(ctx, Role, roleCode)
-}
-
-func GetUserRoleCode(ctx *gin.Context) string {
-	v := GetContextData(ctx, Role)
-	if v == nil {
-		return ""
-	}
-	return v.(string)
 }
 
 func SetErrorCode(ctx *gin.Context, errorCode int) {

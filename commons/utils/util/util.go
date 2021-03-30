@@ -43,7 +43,7 @@ func IsNil(i interface{}) bool {
 func StructToMapUseJson(st interface{}) map[string]interface{} {
 	var ret map[string]interface{}
 	jsonStr, _ := json.Marshal(st)
-	json.Unmarshal(jsonStr, &ret)
+	_ = json.Unmarshal(jsonStr, &ret)
 	return ret
 }
 

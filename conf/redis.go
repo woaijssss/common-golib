@@ -1,18 +1,15 @@
 package conf
 
-const RedisHostDev = "192.168.237.189:6379"
-const PasswordDev = "KfUy0sCVuQTsXQv8"
+const RedisHostDev = "192.168.1.104:6379"
+const PasswordDev = "123456"
 
-const RedisHostOnline = "127.0.0.1:9763"
-const RedisPasswordOnline = "KfUy0sCVuQTsXQv8"
+const RedisHostOnline = "127.0.0.1:6379"
+const RedisPasswordOnline = "123456"
 const RedisDB = 0
 const RedisPoolMaxIdle = 100
 const RedisPoolMaxActive = 10000
 const RedisPoolIdleTimeout = 1
 
-const AllDevicePrefix = "ALL_DEVICE_LIST_PREFIX_"
-const DeviceByIDPrefix = "DEVICE_INFO_BY_ID_PREFIX_"
-const CommunityUserPrefix = "COMMUNITY_USER_PREFIX_"
 const ExpireTime = 86400
 
 type RedisConfig struct {

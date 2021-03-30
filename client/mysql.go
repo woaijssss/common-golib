@@ -27,10 +27,6 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-//func GetYTBDB() *gorm.DB {
-//	return GetDB("ytb_service")
-//}
-
 func MysqlSetup() {
 	mysqlConfig := conf.GetMysqlConf(env)
 	var dsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FShanghai&timeout=10s",
@@ -65,15 +61,6 @@ func MysqlSetup() {
 	//
 	//db[dbName] = newDB
 }
-
-// CloseDB closes database connection (unnecessary)
-//func CloseAllDB() {
-//	defer func() {
-//		for dbName, _ := range db {
-//			db[dbName].Close()
-//		}
-//	}()
-//}
 
 func CloseDB(dbName string) {
 	defer func() {
